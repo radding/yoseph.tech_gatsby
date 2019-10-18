@@ -20,7 +20,7 @@ export default (props) => {
       <div className="row grid" data-colcade="columns: .col-md-6, items: .grid-item">
         {seperated.map((row, ndx) => <Row key={ndx}>
           {row.map((col, ndx) => (
-            <Col key={ndx}>
+            <Col md={6} key={ndx}>
               <PostCard post={col} />
             </Col>
           ))}

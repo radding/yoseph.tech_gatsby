@@ -1,60 +1,49 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "gatsby";
+import { Link, useStaticQuery, graphql } from "gatsby";
 
-export default () => {
+export default (props) => {
+  const footer = useStaticQuery(graphql`{
+    wordpressAcfFooter(wordpress_id: {eq: 35}) {
+    acf {
+      about {
+        title
+        content
+      }
+      column {
+        links {
+          link
+          text
+        }
+        title
+      }
+    }
+  }
+}
+  `);
+  console.log(footer);
+  const footerStyle = props.footerStyle || "white";
   return (
-    <footer className="bg-white text-dark">
+    <footer className={`bg-${footerStyle} text-dark`}>
       <Container className="pt-6 pb-2">
+        <hr />
         <Row className="justify-content-md-between">
-          <Col className="col-4 col-md-2 mb-4">
-            <h4 className="h6">About</h4>
-            <ul className="nav flex-column">
-              <li className="mb-1">
-                <Link to="/me">Who I am</Link>
-              </li>
-              <li className="mb-1">
-                <Link to="/blog">Blog</Link>
-              </li>
-              <li className="mb-1">
-                <Link to="/mission">Our Mission</Link>
-              </li>
-            </ul>
-          </Col>
-
-          <Col className="col-4 col-md-2 mb-4">
-            <h4 className="h6 mb-3">Services</h4>
-            <ul className="nav flex-column">
-              <li className="mb-1">
-                <Link to="/services/consulting">Delivery Consulting</Link>
-              </li>
-              <li className="mb-1">
-                <Link to="/services/design">Design</Link>
-              </li>
-              <li className="mb-1">
-                <Link to="/services/contracting">Software Development</Link>
-              </li>
-            </ul>
-          </Col>
-
-          <Col className="col-4 col-md-2 mb-4">
-            <h4 className="h6 mb-3">Social</h4>
-            <ul className="nav flex-column">
-              <li className="mb-1">
-                <Link to="/services/consulting">LinkedIn</Link>
-              </li>
-              <li className="mb-1">
-                <Link to="/services/design">Twitter</Link>
-              </li>
-              <li className="mb-1">
-                <Link to="/services/contracting">Github</Link>
-              </li>
-            </ul>
-          </Col>
+          {footer.wordpressAcfFooter.acf.column.map((col, ndx) => (
+            <Col className="col-md-3 my-4" key={ndx}>
+              <h4 className="h6">{col.title}</h4>
+              <ul className="nav flex-column">
+                {col.links.map((link, ndx) => (
+                  <li className="mb-1" key={ndx}>
+                    <a href={link.link}>{link.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </Col>
+          ))}
 
           <Col className="col-sm-12 col-md-4 mb-4">
-            <h4 className="h6 mb-3">Company</h4>
-            <p className="text-muted">Yoseph.Tech is focused on delivering the best content on modern development practices. Shuttl is focused on helping your organization reach its technology goals.</p>
+            <h4 className="h6 my-4">{footer.wordpressAcfFooter.acf.about.title}</h4>
+            <div className="text-muted" dangerouslySetInnerHTML={{ __html: footer.wordpressAcfFooter.acf.about.content }}></div>
           </Col>
 
         </Row>

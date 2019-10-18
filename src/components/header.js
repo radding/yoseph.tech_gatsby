@@ -5,15 +5,17 @@ import ConditionalRender from "./ConditionalRender";
 
 const Header = () => {
   const data = useStaticQuery(graphql`
-  query{
-    allMarkdownRemark(filter: {frontmatter: {layout: {in: ["tutorial", "tutorials-popular"]}}},  sort: {order: DESC, fields: frontmatter___date}) {
-      edges {
-        node {
-          id
+    query {
+      wordpressAcfHeader(wordpress_id: {eq: 34}) {
+        acf {
+          links {
+            link
+            text
+          }
         }
       }
     }
-  }`);
+  `);
   return (
     <header className="site-header fixed-top bg-white border-bottom border-light">
       <a href="#content" className="sr-only sr-only-focusable">Skip to content</a>
@@ -27,16 +29,13 @@ const Header = () => {
           </button>
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link to="/posts/" className="nav-link">Posts</Link>
+              <Link to="/tags/popular" className="nav-link">Popular Posts</Link>
             </li>
-            <ConditionalRender condition={data.allMarkdownRemark.edges.length > 0}>
-              <li className="nav-item">
-                <Link to="/tutorials/" className="nav-link">Tutorials</Link>
+            {data.wordpressAcfHeader.acf.links.map((link, ndx) => (
+              <li className="nav-item" key={ndx}>
+                <Link to={link.link} className="nav-link">{link.text}</Link>
               </li>
-            </ConditionalRender>
-            <li className="nav-item">
-              <Link to="/about/" className="nav-link">About</Link>
-            </li>
+            ))}
             <li className="nav-item">
               <Link href="/contact/" className="nav-link">Contact</Link>
             </li>

@@ -3,66 +3,60 @@ import { Link, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import PostList from "../components/posts/PostList";
 import ConditionalRenderer from "../components/ConditionalRender";
+import PostCard from "../components/posts/PostCard";
 
 const dataToPost = (data) => {
   //props.data.recentPosts
-  return data.edges.map(edge => ({ ...edge.node.frontmatter, ...edge.node }))
+  return data.edges.map(edge => ({ ...edge.node }))
 }
 
 const IndexPage = (props) => {
-  console.log(props.data);
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="Welcome | Yoseph.Tech" />
       <div className="bg-light text-black">
         <div className="container-fluid py-5 py-lg-6 text-center">
           <h1 className="display-3 pb-3">Welcome to Yoseph.Tech</h1>
           <div className="row justify-content-center">
             <div className="col-lg-9">
               <p className="lead text-dark mb-0">
-                Modern development made easy.
-            </p>
+                Modern development ideas.
+              </p>
             </div>
           </div>
         </div>
       </div>
       <div className="bg-white text-black">
         <Container className="py-5">
+          <ConditionalRenderer condition={props.data.featured.edges.length > 0}>
+            <h2>My Pick</h2>
+            <Row>
+              <Col md={12}>
+                {console.log(props.data.featured)}
+                <PostCard post={dataToPost(props.data.featured)[0]} />
+              </Col>
+            </Row>
+          </ConditionalRenderer>
+        </Container>
+      </div>
+      <div className="bg-light text-black">
+        <Container className="py-5">
           <h2>Posts</h2>
-          <ConditionalRenderer condition={props.data.popularPosts.edges.length > 0}>
+          <ConditionalRenderer condition={props.data.mostPopular.edges.length > 0}>
             <div>
               <h3 className="small">Most Popular</h3>
-              <PostList posts={dataToPost(props.data.popularPosts)} numberOfColumns={2} limit={4} />
+              <PostList posts={dataToPost(props.data.mostPopular)} numberOfColumns={2} limit={6} />
             </div>
           </ConditionalRenderer>
           <div>
             <h3 className="small">Most Recent</h3>
-            <PostList posts={dataToPost(props.data.recentPosts)} numberOfColumns={2} limit={4} />
+            <PostList posts={dataToPost(props.data.mostRecent)} numberOfColumns={2} limit={6} />
           </div>
         </Container>
       </div>
-      <ConditionalRenderer condition={props.data.recentTutorials.edges.length > 0 || props.data.popularTutorials.edges.length > 0}>
-        <div className="bg-light text-black">
-          <Container className="py-5">
-            <h2>Tutorials</h2>
-            <ConditionalRenderer condition={props.data.popularTutorials.edges.length > 0}>
-              <div>
-                <h3 className="small">Most Popular</h3>
-                <PostList posts={dataToPost(props.data.popularTutorials)} numberOfColumns={2} limit={4} />
-              </div>
-            </ConditionalRenderer>
-            <ConditionalRenderer condition={props.data.recentTutorials.edges.length > 0}>
-              <div>
-                <h3 className="small">Most Recent</h3>
-                <PostList posts={dataToPost(props.data.recentTutorials)} numberOfColumns={2} limit={4} />
-              </div>
-            </ConditionalRenderer>
-          </Container>
-        </div>
-      </ConditionalRenderer>
       <div className="bg-primary text-dark text-center">
         <div className="container py-6">
           <h2>Newsletter subscription</h2>
@@ -93,80 +87,89 @@ export default IndexPage
 export const pageQuery = graphql`
     
 query stuff {
-  recentPosts: allMarkdownRemark(filter: {frontmatter: {layout: {in: ["blog", "blog-popular"]}}}, sort: {order: DESC, fields: frontmatter___date}) {
+  featured: allWordpressPost(sort: {order: DESC, fields: date}, limit: 1, filter: {tags: {elemMatch: {slug: {eq: "homepage-feature"}}}}) {
     edges {
       node {
-        timeToRead
-        id
-        frontmatter {
-          description
-          title
-          img
-          date
-          tag
-          topic
-          subTopic
+        excerpt
+        slug
+        title
+        categories {
+          name
           slug
+          description
+        }
+        date
+        status
+        sticky
+        template
+        featured_media {
+          source_url
+        }
+        acf {
+          snippet
+          tags {
+            tag
+          }
         }
       }
     }
   }
 
-  popularPosts: allMarkdownRemark(filter: {frontmatter: {layout: {eq: "blog-popular"}}},  sort: {order: DESC, fields: frontmatter___date}) {
+  mostPopular: allWordpressPost(sort: {order: DESC, fields: date}, limit: 6, filter: {tags: {elemMatch: {slug: {eq: "popular"}}}}) {
     edges {
       node {
-        timeToRead
-        id
-        frontmatter {
-          description
-          title
-          img
-          date
-          tag
-          topic
-          subTopic
+        excerpt
+        slug
+        title
+        categories {
+          name
           slug
+          description
+        }
+        date
+        status
+        sticky
+        template
+        featured_media {
+          source_url
+        }
+        acf {
+          snippet
+          tags {
+            tag
+          }
         }
       }
     }
   }
-
-  recentTutorials: allMarkdownRemark(filter: {frontmatter: {layout: {in: ["tutorial", "tutorials-popular"]}}},  sort: {order: DESC, fields: frontmatter___date}) {
+  
+  mostRecent: allWordpressPost(sort: {order: DESC, fields: date}, limit: 6, filter: {}) {
     edges {
       node {
-        timeToRead
-        id
-        frontmatter {
-          description
-          title
-          img
-          date
-          tag
-          topic
-          subTopic
+        excerpt
+        slug
+        title
+        categories {
+          name
           slug
+          description
         }
-      }
-    }
-  }
-
-  popularTutorials: allMarkdownRemark(filter: {frontmatter: {layout: {eq: "tutorials-popular"}}},  sort: {order: DESC, fields: frontmatter___date}) {
-    edges {
-      node {
-        timeToRead
-        id
-        frontmatter {
-          description
-          title
-          img
-          date
-          tag
-          topic
-          subTopic
-          slug
+        date
+        status
+        sticky
+        template
+        featured_media {
+          source_url
+        }
+        acf {
+          snippet
+          tags {
+            tag
+          }
         }
       }
     }
   }
 }
+
 `

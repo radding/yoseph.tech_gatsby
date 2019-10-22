@@ -7,26 +7,19 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
-import { Container } from "react-bootstrap";
+import Helmet from 'react-helmet';
 
 import Header from "./header"
 import "../../themes/src/assets/scss/theme.scss";
 import Footer from "./Footer";
 
 const Layout = ({ children, ...props }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
 
   return (
     <>
+      <Helmet>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet" type="text/css" />
+      </Helmet>
       <Header />
       <main>
         {children}

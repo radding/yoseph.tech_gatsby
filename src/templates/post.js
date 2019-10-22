@@ -17,9 +17,9 @@ export default (props) => {
   return (
     <Layout footerStyle="light">
       <SEO title={data.title} description={data.excerpt} />
-      <div className="bg-light text-black">
-        <div className="container-fluid py-5 py-lg-5 text-center">
-          <img className="img-fluid" src={data.featured_media.source_url} />
+      <div className="bg-light text-black pb-6">
+        <div className="container py-5 py-lg-5 text-center">
+          <img className="img-fluid" src={data.featured_media.source_url} alt={data.featured_media && data.featured_media.alt_text} />
           <h1 className="display-6 py-3">{data.title}</h1>
           <div className="row justify-content-center">
             <div className="col-lg-9">
@@ -27,35 +27,38 @@ export default (props) => {
               </div>
             </div>
           </div>
+          <hr className="border-1 border-black my-4 text-left w-15" role="presentation"></hr>
         </div>
       </div>
       <div className="bg-white text-black">
         <Container className="py-3">
-          <Row>
-            <Col>
-              <p className="small text-muted mb-3">{moment(data.date).format("MMMM Do, YYYY")} in <Link className="p-2" to={`/${data.categories[0].slug}/`}>{data.categories[0].name}</Link></p>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <div dangerouslySetInnerHTML={{ __html: data.content }} />
-            </Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            {data.tags && data.tags.map((tag) => {
-              if (exclude.indexOf(tag.slug) > -1) {
-                return null;
-              }
-              return (
-                <Col md={3} className="d-flex flex-column">
-                  <Link className="btn-sm btn btn-outline-dark p-1" to={`/tags/${tag.slug}`}>{tag.name}</Link>
-                </Col>
-              )
-            })}
-          </Row>
-          <hr />
-          <Popular />
+          <div className="mt-n6 bg-white p-4">
+            <Row>
+              <Col>
+                <p className="small text-muted mb-3">{moment(data.date).format("MMMM Do, YYYY")} in <Link className="p-2" to={`/${data.categories[0].slug}/`}>{data.categories[0].name}</Link></p>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <div dangerouslySetInnerHTML={{ __html: data.content }} />
+              </Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              {data.tags && data.tags.map((tag) => {
+                if (exclude.indexOf(tag.slug) > -1) {
+                  return null;
+                }
+                return (
+                  <Col md={3} className="d-flex flex-column">
+                    <Link className="btn-sm btn btn-outline-dark p-1" to={`/tags/${tag.slug}`}>{tag.name}</Link>
+                  </Col>
+                )
+              })}
+            </Row>
+            <hr />
+            <Popular />
+          </div>
         </Container>
       </div>
     </Layout>
@@ -71,6 +74,7 @@ query($id: Int!) {
     excerpt
     featured_media {
       source_url
+      alt_text
     }
     tags {
       name

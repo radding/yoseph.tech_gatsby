@@ -5,7 +5,7 @@ export default (props) => {
   return (
     <div className="bg-light text-black">
       <div className="container-fluid py-5 py-lg-6 text-center">
-        {props.image && (<img className="img-fluid" src={props.image} />)}
+        {props.image && (<img className="img-fluid" src={props.image} alt={props.alt_text} />)}
         <h1 className={`display-${size} pb-3`}>{props.title}</h1>
         <div className="row justify-content-center">
           {props.children}

@@ -25,12 +25,6 @@ export default (props) => {
           featured_media {
             source_url
           }
-          acf {
-            snippet
-            tags {
-              tag
-            }
-          }
         }
       }
     }
@@ -39,11 +33,12 @@ export default (props) => {
 
   return (
     <>
-      <Row>
+      {!props.hideTitle && (<Row>
         <Col>
           <h3 className="text-muted"><small>Popular Posts</small></h3>
         </Col>
       </Row>
+      )}
       <Row>
         {response.allWordpressPost.edges.map(({ node }, ndx) => {
           return (

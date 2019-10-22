@@ -35,8 +35,7 @@ const IndexPage = (props) => {
             <h2>My Pick</h2>
             <Row>
               <Col md={12}>
-                {console.log(props.data.featured)}
-                <PostCard post={dataToPost(props.data.featured)[0]} />
+                <PostCard post={dataToPost(props.data.featured)[0]} center />
               </Col>
             </Row>
           </ConditionalRenderer>
@@ -54,22 +53,31 @@ const IndexPage = (props) => {
           <div>
             <h3 className="small">Most Recent</h3>
             <PostList posts={dataToPost(props.data.mostRecent)} numberOfColumns={2} limit={6} />
+            <p className="text-right">
+              <Link to="/posts" className="px-3">See All Posts <i className="fas fa-long-arrow-alt-right px-2"></i></Link>
+            </p>
           </div>
+        </Container>
+      </div>
+      <div className="bg-white text-black">
+        <Container className="py-5 text-center">
+          <h2>Browse All Categories</h2>
+          <p>Don't see something that catches your interest here? <Link to="/categories" >Browse all categories <i className="fas fa-long-arrow-alt-right px-2"></i></Link></p>
         </Container>
       </div>
       <div className="bg-primary text-dark text-center">
         <div className="container py-6">
           <h2>Newsletter subscription</h2>
           <p className="mb-4">Subscribe to our newsletter to receive news &amp; updates.</p>
-          <form>
+          <form action="https://shuttl.us13.list-manage.com/subscribe/post?u=29eec081828629fffd977e88f&amp;id=2892f34576" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" noValidate>
             <div className="form-row justify-content-center align-items-center">
               <div className="col-md-4">
-                <label className="sr-only" htmlFor="inputName">First name</label>
-                <input type="text" className="form-control border-0 font-italic mb-3" id="inputName" placeholder="First Name" />
+                <label className="sr-only" htmlFor="mce-FNAME">First name</label>
+                <input type="text" name="FNAME" className="form-control border-0 font-italic mb-3" id="mce-FNAME" placeholder="First Name" />
               </div>
               <div className="col-md-4">
-                <label className="sr-only" htmlFor="inputEmail">Email address</label>
-                <input type="email" className="form-control border-0 font-italic mb-3" id="inputEmail" placeholder="Email Address" />
+                <label className="sr-only" htmlFor="mce-EMAIL">Email address</label>
+                <input type="email" name="EMAIL" className="form-control border-0 font-italic mb-3" id="mce-EMAIL" placeholder="Email Address" />
               </div>
               <div className="col-md-auto">
                 <button type="submit" className="btn btn-dark mb-3">Sign Up</button>
@@ -81,6 +89,7 @@ const IndexPage = (props) => {
     </Layout>
   )
 }
+
 
 export default IndexPage
 
@@ -105,12 +114,6 @@ query stuff {
         featured_media {
           source_url
         }
-        acf {
-          snippet
-          tags {
-            tag
-          }
-        }
       }
     }
   }
@@ -133,12 +136,6 @@ query stuff {
         featured_media {
           source_url
         }
-        acf {
-          snippet
-          tags {
-            tag
-          }
-        }
       }
     }
   }
@@ -160,12 +157,6 @@ query stuff {
         template
         featured_media {
           source_url
-        }
-        acf {
-          snippet
-          tags {
-            tag
-          }
         }
       }
     }

@@ -1,7 +1,7 @@
 import { Link, useStaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
-import ConditionalRender from "./ConditionalRender";
+import MyLink from "./links";
 
 const Header = () => {
   const data = useStaticQuery(graphql`
@@ -11,6 +11,7 @@ const Header = () => {
           links {
             link
             text
+            is_internal
           }
         }
       }
@@ -27,19 +28,18 @@ const Header = () => {
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to="/tags/popular" className="nav-link">Popular Posts</Link>
-            </li>
-            {data.wordpressAcfHeader.acf.links.map((link, ndx) => (
-              <li className="nav-item" key={ndx}>
-                <Link to={link.link} className="nav-link">{link.text}</Link>
+          <div id="navbarContent" className="collapse navbar-collapse">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to="/tags/popular" className="nav-link" activeClassName="active">Popular</Link>
               </li>
-            ))}
-            <li className="nav-item">
-              <Link href="/contact/" className="nav-link">Contact</Link>
-            </li>
-          </ul>
+              {data.wordpressAcfHeader.acf.links.map((link, ndx) => (
+                <li className="nav-item" key={ndx}>
+                  <MyLink link={link.link} text={link.text} className="nav-link" activeClassName="active" isInternal={link.is_internal} />
+                </li>
+              ))}
+            </ul>
+          </div>
         </nav>
       </div>
     </header>

@@ -5,12 +5,14 @@ import SEO from "../components/seo";
 import ConditionalRender from "../components/ConditionalRender";
 import { Container, Row, Col } from "react-bootstrap";
 import PostCard from "../components/posts/PostCard";
+import Popular from "../components/popular";
+import Pagination from "../components/pagination";
 
 export default (props) => {
   console.log("Data:", props);
   return (
     <Layout>
-      <SEO title={`${props.data.info.name}`} />
+      <SEO title={`${props.data.info.name}`} description={props.data.info.description} />
       <div className="bg-light text-black">
         <div className="container-fluid py-5 py-lg-6 text-center">
           <h1 className="display-6 pb-3">Yoseph.Tech's Take on {props.data.info.name}</h1>
@@ -24,6 +26,21 @@ export default (props) => {
         </div>
       </div>
       <div className="bg-white text-black">
+        <ConditionalRender condition={props.data.allPosts.edges.length > 0}>
+          <Container className="py-5">
+            <h2>Recent Posts</h2>
+            <Row>
+              {props.data.allPosts.edges.map(edge => (
+                <Col md={4}>
+                  <PostCard post={edge.node} hideCategory />
+                </Col>
+              ))}
+            </Row>
+            <Pagination slugBase={props.data.info.slug} {...props.pageContext} />
+          </Container>
+        </ConditionalRender>
+      </div>
+      <div className="bg-light text-black">
         <ConditionalRender condition={props.data.featured.edges.length > 0}>
           <Container className="py-5">
             <h2>My Picks</h2>
@@ -37,32 +54,27 @@ export default (props) => {
           </Container>
         </ConditionalRender>
       </div>
-      <div className="bg-light text-black">
-        <ConditionalRender condition={props.data.featured.edges.length > 0}>
-          <Container className="py-5">
-            <h2>Recent Posts</h2>
-            {props.data.allPosts.edges.map(edge => (
-              <Row>
-                <Col>
-                  <PostCard post={edge.node} hideCategory />
-                </Col>
-              </Row>
-            ))}
-          </Container>
-        </ConditionalRender>
+      <div className="bg-white">
+        <Container>
+          <Popular />
+        </Container>
       </div>
     </Layout>
   )
 }
 
 export const query = graphql`
-query($id: Int!) {
+query($id: Int!, $limit: Int!, $skip: Int!) {
   info:  wordpressCategory(wordpress_id: {eq: $id}) {
     description
     name
     slug
   }
-  featured: allWordpressPost(filter: {categories: {elemMatch: {wordpress_id: {eq: $id}}}, tags: {elemMatch: {slug: {eq: "page-popular"}}}}, sort: {order: DESC, fields: date}, limit: 6) {
+  featured: allWordpressPost(
+    filter: {categories: {elemMatch: {wordpress_id: {eq: $id}}}, tags: {elemMatch: {slug: {eq: "page-popular"}}}}, 
+    sort: {order: DESC, fields: date},
+    limit: 6
+  ) {
     edges {
       node {
         excerpt
@@ -83,7 +95,11 @@ query($id: Int!) {
       }
     }
   }
-  allPosts: allWordpressPost(filter: {categories: {elemMatch: {wordpress_id: {eq: $id}}}}, sort: {order: DESC, fields: date}) {
+  allPosts: allWordpressPost(
+    filter: {categories: {elemMatch: {wordpress_id: {eq: $id}}}}, sort: {order: DESC, fields: date},
+    limit: $limit,
+    skip: $skip
+  ) {
     edges {
       node {
         excerpt

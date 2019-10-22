@@ -1,5 +1,4 @@
 import React from "react";
-import { graphql } from "gatsby";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 import { Container, Row, Col } from "react-bootstrap";
@@ -7,64 +6,55 @@ import PostCard from "../components/posts/PostCard";
 import Pagination from "../components/pagination";
 
 export default (props) => {
-  console.log("Data:", props);
   return (
-    <Layout footerStyle="light">
-      <SEO title={`${props.data.info.name}`} description={`See all posts tagged with ${props.data.info.name}.`} />
+    <Layout>
+      <SEO title="All Posts" description="All Posts sorted by most recent" />
       <div className="bg-light text-black">
         <div className="container-fluid py-5 py-lg-6 text-center">
-          <h1 className="display-6 pb-3 text-capitalize">Posts tagged with {props.data.info.name}</h1>
+          <h1 className="display-3 pb-3">Browse all posts</h1>
         </div>
       </div>
       <div className="bg-white text-black">
         <Container className="py-5">
-          <h2 className="text-muted">Posts</h2>
           <Row>
-            {props.data.allPosts.edges.map(edge => (
-              <Col md={4}>
+            {props.data.mostRecent.edges.map((edge, key) => (
+              <Col key={key} md={4}>
                 <PostCard post={edge.node} />
               </Col>
             ))}
           </Row>
-          <Pagination slugBase={`/tags/${props.data.info.slug}`} {...props.pageContext} />
+          <Pagination slugBase="/posts" {...props.pageContext} />
         </Container>
       </div>
     </Layout>
   )
 }
 
-export const query = graphql`
-query($id: Int!, $limit: Int!, $skip: Int!) {
-  info: wordpressTag(wordpress_id: {eq: $id}) {
-    description
-    name
-    slug
-  }
-  allPosts: allWordpressPost(
-    filter: {tags: {elemMatch: {wordpress_id: {eq: $id}}}},
+export const pageQuery = graphql`
+query ($limit: Int!, $skip: Int!){
+  mostRecent: allWordpressPost(
     sort: {order: DESC, fields: date},
     limit: $limit,
-    skip: $skip
-  ) {
+    skip: $skip) {
     edges {
       node {
         excerpt
         slug
-        tags {
-          slug
-          name
-        }
+        title
         categories {
           name
           slug
           description
         }
+        date
+        status
+        sticky
+        template
         featured_media {
           source_url
+          alt_text
         }
-        title
       }
     }
   }
-}
-`;
+}`;

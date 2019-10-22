@@ -9,6 +9,66 @@ module.exports = {
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-react-helmet`,
     {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+                site_url: siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { site, allWordpressPost } }) => {
+              return allWordpressPost.edges.map(edge => ({
+                ...edge.node,
+                description: edge.node.excerpt,
+                url: `${site.siteMetadata.siteUrl}/${edge.node.categories[0].slug}/${edge.node.slug}`,
+                guid: `${site.siteMetadata.siteUrl}/${edge.node.categories[0].slug}/${edge.node.slug}`,
+                custom_elements: [{ "content:encoded": edge.node.content }],
+                category: edge.node.categories[0].name,
+              }));
+            },
+            query: `
+          {
+            allWordpressPost {
+              edges {
+                node {
+                  title
+                  content
+                  date
+                  excerpt
+                  slug
+                  featured_media {
+                    source_url
+                  }
+                  tags {
+                    name
+                    slug
+                  }
+                  categories {
+                    name
+                    slug
+                    description
+                  }
+                }
+              }
+            }
+          }
+          `,
+            output: "/rss.xml",
+            title: "Yoseph.Tech RSS Feed"
+          },
+        ]
+      }
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,

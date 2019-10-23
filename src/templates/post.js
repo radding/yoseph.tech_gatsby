@@ -40,7 +40,7 @@ export default (props) => {
             </Row>
             <Row>
               <Col>
-                <div dangerouslySetInnerHTML={{ __html: data.content }} />
+                <div dangerouslySetInnerHTML={{ __html: data.content }} id="#__post-content" />
               </Col>
             </Row>
             <hr />

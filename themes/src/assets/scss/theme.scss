@@ -4,6 +4,16 @@
 // Bootstrap
 @import "../../../../node_modules/bootstrap/scss/bootstrap.scss";
 
+#__post-content {
+    pre {
+        margin-left: $spacer * 3 !important;
+    }
+    figure {
+       margin: $spacer * 3 auto !important;
+       text-align: center !important;
+    }
+}
+
 // Custom components
 
 @import "./custom/type";

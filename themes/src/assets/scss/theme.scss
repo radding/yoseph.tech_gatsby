@@ -11,8 +11,12 @@
     figure {
        margin: $spacer * 3 auto !important;
        text-align: center !important;
-       width: 100%;
+       width: 100% !important;
        max-width: 512px;
+       img {
+            max-width: 100%;
+            height: auto;
+       }
     }
 }
 

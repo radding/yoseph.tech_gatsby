@@ -11,6 +11,8 @@
     figure {
        margin: $spacer * 3 auto !important;
        text-align: center !important;
+       width: 100%;
+       max-width: 512px;
     }
 }
 

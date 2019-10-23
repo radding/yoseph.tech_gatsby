@@ -22,6 +22,34 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 }
 
 exports.createPages = async ({ graphql, actions }) => {
+  actions.createRedirect({
+    fromPath: "/lets-change-how-we-speak-about-testing/",
+    isPermanent: true,
+    redirectInBrowser: true,
+    toPath: `/engineering/from-test-driven-development-to-test-driven-design/`,
+  });
+
+  actions.createRedirect({
+    fromPath: "/building-production-code/",
+    isPermanent: true,
+    redirectInBrowser: true,
+    toPath: `/engineering/building-production-code/`,
+  });
+
+  actions.createRedirect({
+    fromPath: "/building-an-arcade-controller/",
+    isPermanent: true,
+    redirectInBrowser: true,
+    toPath: `/raspberry-pi/building-an-arcade-controller/`,
+  });
+
+  actions.createRedirect({
+    fromPath: "/completely-useless-fun-project-building-the-parser/",
+    isPermanent: true,
+    redirectInBrowser: true,
+    toPath: `/compilers/completely-useless-fun-project-building-the-parser/`,
+  });
+
   // **Note:** The graphql function call returns a Promise
   const postPerPage = 12;
   // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info

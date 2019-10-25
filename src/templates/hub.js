@@ -85,6 +85,7 @@ query($id: Int!, $limit: Int!, $skip: Int!) {
         }
         featured_media {
           source_url
+          alt_text
         }
         categories {
           name

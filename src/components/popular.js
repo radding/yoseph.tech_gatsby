@@ -24,6 +24,7 @@ export default (props) => {
           template
           featured_media {
             source_url
+            alt_text
           }
         }
       }

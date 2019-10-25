@@ -94,6 +94,7 @@ query ($limit: Int!, $skip: Int!, $categories: [Int!]){
         }
         featured_media {
           source_url
+          alt_text
         }
         title
       }

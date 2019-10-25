@@ -4,6 +4,13 @@
 // Bootstrap
 @import "../../../../node_modules/bootstrap/scss/bootstrap.scss";
 
+.md-small {
+    @include media-breakpoint-up(md) {
+        font-size: 80%;
+        font-weight: 400;
+    }
+}
+
 #__post-content {
     pre {
         margin-left: $spacer * 3 !important;

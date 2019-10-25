@@ -8,6 +8,16 @@ module.exports = {
   plugins: [
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-react-helmet`,
+
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://www.yoseph.tech/',
+        sitemap: 'https://www.yoseph.tech/sitemap.xml',
+        policy: [{ userAgent: '*', allow: '/' }]
+      }
+    },
+
     {
       resolve: `gatsby-plugin-feed`,
       options: {

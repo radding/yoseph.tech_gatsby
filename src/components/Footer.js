@@ -35,8 +35,8 @@ export default (props) => {
               <h4 className="h6">{col.title}</h4>
               <ul className="nav flex-column">
                 {col.links.map((link, ndx) => (
-                  <li className="mb-1" key={ndx}>
-                    <MyLink link={link.link} text={link.text} isInternal={link.is_internal} />
+                  <li className="mb-1 py-3" key={ndx}>
+                    <MyLink link={link.link} text={link.text} isInternal={link.is_internal} className="stretched-link" />
                   </li>
                 ))}
               </ul>

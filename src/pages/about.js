@@ -10,9 +10,11 @@ export default (props) => {
   const data = useStaticQuery(graphql`
   query MyQuery {
 	wordpressPage(wordpress_id:{eq: 39}) {
-    excerpt
     content
     title
+    acf {
+      excerpt
+    }
   }
 }
   `).wordpressPage;
@@ -24,7 +26,7 @@ export default (props) => {
           <h1 className="display-6 py-3">{data.title}</h1>
           <div className="row justify-content-center">
             <div className="col-lg-9">
-              <div className="lead text-dark mb-0 small text-muted" dangerouslySetInnerHTML={{ __html: data.excerpt }}>
+              <div className="lead text-dark mb-0 small text-muted" dangerouslySetInnerHTML={{ __html: data.acf.excerpt }}>
               </div>
             </div>
           </div>

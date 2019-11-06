@@ -114,6 +114,13 @@ query stuff {
         featured_media {
           source_url
           alt_text
+localFile {
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
         }
       }
     }
@@ -137,6 +144,13 @@ query stuff {
         featured_media {
           source_url
           alt_text
+localFile {
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
         }
       }
     }
@@ -160,6 +174,13 @@ query stuff {
         featured_media {
           source_url
           alt_text
+localFile {
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
         }
       }
     }

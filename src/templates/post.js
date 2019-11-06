@@ -2,6 +2,7 @@ import React from "react";
 import { graphql, Link } from "gatsby";
 import { Container, Row, Col } from "react-bootstrap";
 import moment from "moment";
+import Img from "gatsby-image";
 
 import Layout from "../components/layout";
 import SEO from "../components/seo";
@@ -14,12 +15,14 @@ const exclude = [
 
 export default (props) => {
   const data = props.data.wordpressPost;
+  const img = data.featured_media.localFile.childImageSharp;
   return (
     <Layout footerStyle="light">
       <SEO title={data.title} description={data.excerpt} />
       <div className="bg-light text-black pb-6">
         <div className="container py-5 py-lg-5 text-center">
-          <img className="img-fluid" src={data.featured_media.source_url} alt={data.featured_media && data.featured_media.alt_text} />
+          {/* <img className="img-fluid" src={data.featured_media.source_url} alt={data.featured_media && data.featured_media.alt_text} /> */}
+          <Img fluid={img.fluid} alt={data.featured_media.alt_text} />
           <h1 className="display-6 py-3">{data.title}</h1>
           <div className="row justify-content-center">
             <div className="col-lg-9">
@@ -75,6 +78,13 @@ query($id: Int!) {
     featured_media {
       source_url
       alt_text
+      localFile {
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
     }
     tags {
       name

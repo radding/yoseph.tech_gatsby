@@ -25,6 +25,13 @@ export default (props) => {
           featured_media {
             source_url
             alt_text
+localFile {
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
           }
         }
       }

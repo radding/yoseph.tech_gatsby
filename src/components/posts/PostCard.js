@@ -16,7 +16,7 @@ export default (props) => {
         {/* <img src={props.post.featured_media && props.post.featured_media.source_url} alt={props.post.featured_media.alt_text} className="img-fluid mb-2" /> */}
         <Image {...props.post} />
         <figcaption className="h5 font-weight-normal">
-          {props.post.title}
+          <span dangerouslySetInnerHTML={{ __html: props.post.title }} />
           <br />
           <span className="small text-muted" dangerouslySetInnerHTML={{ __html: props.post.excerpt }}></span>
         </figcaption>

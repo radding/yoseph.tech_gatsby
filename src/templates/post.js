@@ -23,7 +23,7 @@ export default (props) => {
         <div className="container py-5 py-lg-5 text-center">
           {/* <img className="img-fluid" src={data.featured_media.source_url} alt={data.featured_media && data.featured_media.alt_text} /> */}
           <Img fluid={img.fluid} alt={data.featured_media.alt_text} />
-          <h1 className="display-6 py-3">{data.title}</h1>
+          <h1 className="display-6 py-3" dangerouslySetInnerHTML={{ __html: data.title }}></h1>
           <div className="row justify-content-center">
             <div className="col-lg-9">
               <div className="lead text-dark mb-0 small" dangerouslySetInnerHTML={{ __html: data.excerpt }}>

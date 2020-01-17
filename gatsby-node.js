@@ -154,6 +154,13 @@ exports.createPages = async ({ graphql, actions }) => {
         id: node.wordpress_id,
       }
     })
+    actions.createPage({
+      path: `/${node.categories[0].slug}/${node.slug}/amp`,
+      component: path.resolve("./src/templates/post.amp.js"),
+      context: {
+        id: node.wordpress_id,
+      }
+    })
   });
 
   const postsPerPage = 20;

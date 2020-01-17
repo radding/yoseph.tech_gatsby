@@ -51,7 +51,7 @@ localFile {
         {response.allWordpressPost.edges.map(({ node }, ndx) => {
           return (
             <Col md={4} key={ndx}>
-              <PostCard post={node} />
+              <PostCard post={node} linkToAmp={props.linkToAmp} />
             </Col>
           )
         })}

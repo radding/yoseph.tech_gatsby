@@ -5,9 +5,37 @@ module.exports = {
     author: `@yosephradding`,
     siteUrl: `https://www.yoseph.tech`
   },
+
   plugins: [
+
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-react-helmet`,
+
+    {
+      resolve: `gatsby-plugin-amp`,
+      options: {
+        analytics: {
+          type: 'gtag',
+          dataCredentials: 'include',
+          config: {
+            vars: {
+              gtag_id: "",
+              config: {
+                "": {
+                  page_location: '{{ pathname }}'
+                },
+              },
+            },
+          },
+        },
+        canonicalBaseUrl: 'http://www.example.com/',
+        components: ['amp-form'],
+        excludedPaths: ['/404*', '/'],
+        pathIdentifier: '/amp/',
+        relAmpHtmlPattern: '{{ canonicalBaseUrl }}{{ pathname }}{{ pathIdentifier }}',
+        useAmpClientIdApi: true,
+      },
+    },
 
     {
       resolve: 'gatsby-plugin-robots-txt',
@@ -23,16 +51,16 @@ module.exports = {
       options: {
         query: `
           {
-            site {
-              siteMetadata {
-                title
+                      site {
+                      siteMetadata {
+                      title
                 description
-                siteUrl
-                site_url: siteUrl
+                    siteUrl
+                    site_url: siteUrl
+                  }
+                }
               }
-            }
-          }
-        `,
+            `,
         feeds: [
           {
             serialize: ({ query: { site, allWordpressPost } }) => {
@@ -47,23 +75,23 @@ module.exports = {
             },
             query: `
           {
-            allWordpressPost {
-              edges {
-                node {
-                  title
+                      allWordpressPost {
+                      edges {
+                      node {
+                      title
                   content
-                  date
-                  excerpt
-                  slug
+                    date
+                    excerpt
+                    slug
                   featured_media {
-                    source_url
-                  }
-                  tags {
-                    name
+                      source_url
+                    }
+                    tags {
+                      name
                     slug
                   }
                   categories {
-                    name
+                      name
                     slug
                     description
                   }

@@ -15,13 +15,14 @@ const exclude = [
 
 export default (props) => {
   const data = props.data.wordpressPost;
-  const img = data.featured_media.localFile.childImageSharp;
+  const img = data.featured_media.localFile.childImageSharp.fixed;
   return (
     <Layout footerStyle="light">
       <SEO title={data.title} description={data.excerpt} />
       <div className="bg-light text-black pb-6">
         <div className="container py-5 py-lg-5 text-center">
-          <Img fluid={img.fluid} alt={data.featured_media.alt_text} />
+          <amp-img src-set={img.srcSet} src={img.src} width={img.width} height={img.height} alt={data.featured_media.alt_text} layout="responsive" />
+          {/* <Img fluid={img.fluid} alt={data.featured_media.alt_text} /> */}
           <h1 className="display-6 py-3" dangerouslySetInnerHTML={{ __html: data.title }}></h1>
           <div className="row justify-content-center">
             <div className="col-lg-9">
@@ -59,7 +60,7 @@ export default (props) => {
               })}
             </Row>
             <hr />
-            <Popular />
+            <Popular linkToAmp />
           </div>
         </Container>
       </div>
@@ -79,8 +80,11 @@ query($id: Int!) {
       alt_text
       localFile {
         childImageSharp {
-          fluid {
-            ...GatsbyImageSharpFluid
+          fixed {
+            srcSet
+            src
+            width
+            height
           }
         }
       }

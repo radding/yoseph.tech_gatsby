@@ -13,8 +13,7 @@ export default (props) => {
   return (
     <figure className={`img-rising mb-4 ${props.center ? "text-center" : ""} mr-3`}>
       <Link to={`/${props.post.categories[0].slug}/${props.post.slug}/${props.linkToAmp ? "amp/" : ""}`}>
-        {/* <img src={props.post.featured_media && props.post.featured_media.source_url} alt={props.post.featured_media.alt_text} className="img-fluid mb-2" /> */}
-        <Image {...props.post} />
+        <Image {...props.post} className="mx-auto width-450" />
         <figcaption className="h5 font-weight-normal">
           <span dangerouslySetInnerHTML={{ __html: props.post.title }} />
           <br />

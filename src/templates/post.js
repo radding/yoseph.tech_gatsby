@@ -21,7 +21,7 @@ export default (props) => {
       <SEO title={data.title} description={data.excerpt} />
       <div className="bg-light text-black pb-6">
         <div className="container py-5 py-lg-5 text-center">
-          <Img fluid={img.fluid} alt={data.featured_media.alt_text} />
+          <Img fixed={img.fixed} alt={data.featured_media.alt_text} className="mx-auto" />
           <h1 className="display-6 py-3" dangerouslySetInnerHTML={{ __html: data.title }}></h1>
           <div className="row justify-content-center">
             <div className="col-lg-9">
@@ -79,8 +79,8 @@ query($id: Int!) {
       alt_text
       localFile {
         childImageSharp {
-          fluid {
-            ...GatsbyImageSharpFluid
+          fixed(width: 450) {
+            ...GatsbyImageSharpFixed
           }
         }
       }

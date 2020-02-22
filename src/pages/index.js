@@ -34,8 +34,8 @@ const IndexPage = (props) => {
           <ConditionalRenderer condition={props.data.featured.edges.length > 0}>
             <h2>My Pick</h2>
             <Row>
-              <Col md={12}>
-                <PostCard post={dataToPost(props.data.featured)[0]} center />
+              <Col md={6} className="mx-auto">
+                <PostCard post={dataToPost(props.data.featured)[0]} center imgSize={45} />
               </Col>
             </Row>
           </ConditionalRenderer>
@@ -116,7 +116,7 @@ query stuff {
           alt_text
 localFile {
         childImageSharp {
-          fluid {
+          fluid (maxWidth: 450){
             ...GatsbyImageSharpFluid
           }
         }
@@ -146,7 +146,7 @@ localFile {
           alt_text
 localFile {
         childImageSharp {
-          fluid {
+          fluid (maxWidth: 450){
             ...GatsbyImageSharpFluid
           }
         }
@@ -176,7 +176,7 @@ localFile {
           alt_text
 localFile {
         childImageSharp {
-          fluid {
+          fluid(maxWidth: 450) {
             ...GatsbyImageSharpFluid
           }
         }

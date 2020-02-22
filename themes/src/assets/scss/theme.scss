@@ -26,7 +26,6 @@
        }
     }
 }
-
 // Custom components
 
 @import "./custom/type";
@@ -39,3 +38,11 @@
 @import "./custom/pagination";
 @import "./custom/utilities";
 @import "./custom/zoom";
+
+.main-nav .navbar-brand img {
+    max-height: none !important;
+}
+
+.width-450 {
+    max-width: 450px;
+}

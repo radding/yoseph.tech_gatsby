@@ -2,10 +2,20 @@ import { Link, useStaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 import MyLink from "./links";
+import Img from "gatsby-image"
 
 const Header = () => {
   const data = useStaticQuery(graphql`
     query {
+      file (relativePath: {eq: "logo.png"}) {
+        childImageSharp {
+          # Specify the image processing specifications right in the query.
+          # Makes it trivial to update as your page's design changes.
+          fixed(width: 250) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
       wordpressAcfHeader(wordpress_id: {eq: 34}) {
         acf {
           links {
@@ -23,8 +33,10 @@ const Header = () => {
       <div className="container">
         <nav className="navbar main-nav navbar-expand-lg navbar-light" aria-label="Main navigation">
           <Link to="/" className="navbar-brand d-inline-flex text-uppercase">
-            yoseph.tech
-        </Link>
+            <Img fixed={data.file.childImageSharp.fixed} alt="Yoseph.tech" style={{ maxHeight: "none" }} />
+            {/* <img src="/src/images/1.png" alt="My Logo" /> */}
+            {/* yoseph.tech */}
+          </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>

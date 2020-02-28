@@ -9,7 +9,6 @@ import Popular from "../components/popular";
 import Pagination from "../components/pagination";
 
 export default (props) => {
-  console.log("Data:", props);
   return (
     <Layout>
       <SEO title={`${props.data.info.name}`} description={props.data.info.description} />

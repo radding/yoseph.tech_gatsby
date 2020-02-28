@@ -7,7 +7,6 @@ import PostCard from "../components/posts/PostCard";
 import Pagination from "../components/pagination";
 
 export default (props) => {
-  console.log("Data:", props);
   return (
     <Layout footerStyle="light">
       <SEO title={`${props.data.info.name}`} description={`See all posts tagged with ${props.data.info.name}.`} />

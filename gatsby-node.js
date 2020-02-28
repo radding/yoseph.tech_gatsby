@@ -93,7 +93,6 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `);
   result.data.tags.edges.forEach(({ node }) => {
-    console.log(node);
     const numOfPages = Math.ceil(node.count / postPerPage);
     Array.from({ length: numOfPages }).forEach((_, ndx) => {
       actions.createPage({
@@ -110,7 +109,6 @@ exports.createPages = async ({ graphql, actions }) => {
     });
   });
   result.data.categories.edges.forEach(({ node }) => {
-    console.log(node);
     const numOfPages = Math.ceil(node.count / postPerPage);
     Array.from({ length: numOfPages }).forEach((_, ndx) => {
       if (node.count === 0) {

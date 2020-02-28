@@ -23,7 +23,6 @@ export default (props) => {
   }
 }
   `);
-  console.log(footer);
   const footerStyle = props.footerStyle || "white";
   return (
     <footer className={`bg-${footerStyle} text-dark`}>

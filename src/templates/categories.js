@@ -11,7 +11,6 @@ const description = `Browse all categories of posts that I have on my site.`
 
 export default (props) => {
   let realNdx = -1;
-  console.log(props);
   return (
     <Layout>
       <SEO title="Browse all categories" description={description} />

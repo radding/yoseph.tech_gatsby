@@ -104,6 +104,7 @@ exports.createPages = async ({ graphql, actions }) => {
           id: node.wordpress_id,
           numOfPages,
           currentPage: ndx + 1,
+          slug: node.slug,
         }
       })
     });
@@ -123,6 +124,7 @@ exports.createPages = async ({ graphql, actions }) => {
           id: node.wordpress_id,
           numOfPages,
           currentPage: ndx + 1,
+          slug: node.slug,
         }
       })
     });
@@ -140,6 +142,7 @@ exports.createPages = async ({ graphql, actions }) => {
         numOfPages: numOfPagesCat,
         currentPage: ndx + 1,
         categories: result.data.categories.edges.slice(ndx * catsPerPage, ndx * catsPerPage + catsPerPage).map(cat => cat.node.wordpress_id),
+
       }
     });
   })

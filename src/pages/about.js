@@ -20,7 +20,7 @@ export default (props) => {
   `).wordpressPage;
   return (
     <Layout>
-      <SEO title="About Me" description={`About Me: ${data.excerpt}`} />
+      <SEO title="About Me" description={`About Me: ${data.excerpt}`} pathname="/about" />
       <div className="bg-light text-black pb-3">
         <div className="container py-5 py-lg-5 text-center">
           <h1 className="display-6 py-3">{data.title}</h1>

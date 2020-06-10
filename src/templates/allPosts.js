@@ -8,7 +8,7 @@ import Pagination from "../components/pagination";
 export default (props) => {
   return (
     <Layout>
-      <SEO title="All Posts" description="All Posts sorted by most recent" />
+      <SEO title="All Posts" description="All Posts sorted by most recent" pathname={props.path} />
       <div className="bg-light text-black">
         <div className="container-fluid py-5 py-lg-6 text-center">
           <h1 className="display-3 pb-3">Browse all posts</h1>

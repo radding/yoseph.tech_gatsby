@@ -18,7 +18,7 @@ export default (props) => {
   const img = data.featured_media.localFile.childImageSharp;
   return (
     <Layout footerStyle="light">
-      <SEO title={data.title} description={data.excerpt} />
+      <SEO title={data.title} description={data.excerpt} pathname={props.path} />
       <div className="bg-light text-black pb-6">
         <div className="container py-5 py-lg-5 text-center">
           <Img fixed={img.fixed} alt={data.featured_media.alt_text} className="mx-auto" />

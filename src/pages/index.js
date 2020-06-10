@@ -16,7 +16,7 @@ const dataToPost = (data) => {
 const IndexPage = (props) => {
   return (
     <Layout>
-      <SEO title="Welcome | Yoseph.Tech" />
+      <SEO title="Welcome | Yoseph.Tech" pathname="/" />
       <div className="bg-light text-black">
         <div className="container-fluid py-5 py-lg-6 text-center">
           <h1 className="display-3 pb-3">Welcome to Yoseph.Tech</h1>

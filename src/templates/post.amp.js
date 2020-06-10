@@ -18,7 +18,7 @@ export default (props) => {
   const img = data.featured_media.localFile.childImageSharp.fixed;
   return (
     <Layout footerStyle="light">
-      <SEO title={data.title} description={data.excerpt} />
+      <SEO title={data.title} description={data.excerpt} pathname={props.path} />
       <div className="bg-light text-black pb-6">
         <div className="container py-5 py-lg-5 text-center">
           <amp-img src-set={img.srcSet} src={img.src} width={img.width} height={img.height} alt={data.featured_media.alt_text} layout="responsive" />

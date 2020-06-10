@@ -13,7 +13,7 @@ export default (props) => {
   let realNdx = -1;
   return (
     <Layout>
-      <SEO title="Browse all categories" description={description} />
+      <SEO title="Browse all categories" description={description} pathname={props.path} />
       <div className="bg-light text-black">
         <div className="container-fluid py-5 py-lg-6 text-center">
           <h1 className="display-3 pb-3">Browse all Categories</h1>

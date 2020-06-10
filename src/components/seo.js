@@ -9,8 +9,9 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
+import url from "url";
 
-function SEO({ description, lang, meta, title }) {
+function SEO({ description, lang, meta, title, pathname }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -26,6 +27,9 @@ function SEO({ description, lang, meta, title }) {
   )
 
   const metaDescription = description || site.siteMetadata.description
+  const siteUrl = "https://www.yoseph.tech"
+  const parsedUrl = url.parse(siteUrl);
+  const myUrl = `${siteUrl}${pathname}`;
 
   return (
     <Helmet
@@ -67,8 +71,19 @@ function SEO({ description, lang, meta, title }) {
           name: `twitter:description`,
           content: metaDescription,
         },
+        {
+          name: ``
+        },
       ].concat(meta)}
-    />
+    >
+      {pathname && (<link
+        rel="canonical"
+        key={myUrl}
+        href={myUrl}
+        data-baseprotocol={parsedUrl.protocol}
+        data-basehost={parsedUrl.host}
+      />)}
+    </Helmet>
   )
 }
 

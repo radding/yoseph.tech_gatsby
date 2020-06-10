@@ -9,7 +9,7 @@ import Pagination from "../components/pagination";
 export default (props) => {
   return (
     <Layout footerStyle="light">
-      <SEO title={`${props.data.info.name}`} description={`See all posts tagged with ${props.data.info.name}.`} />
+      <SEO title={`${props.data.info.name}`} description={`See all posts tagged with ${props.data.info.name}.`} pathname={props.path} />
       <div className="bg-light text-black">
         <div className="container-fluid py-5 py-lg-6 text-center">
           <h1 className="display-6 pb-3 text-capitalize">Posts tagged with {props.data.info.name}</h1>

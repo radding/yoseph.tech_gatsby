@@ -11,7 +11,7 @@ import Pagination from "../components/pagination";
 export default (props) => {
   return (
     <Layout>
-      <SEO title={`${props.data.info.name}`} description={props.data.info.description} />
+      <SEO title={`${props.data.info.name}`} description={props.data.info.description} pathname={props.path} />
       <div className="bg-light text-black">
         <div className="container-fluid py-5 py-lg-6 text-center">
           <h1 className="display-6 pb-3">Yoseph.Tech's Take on {props.data.info.name}</h1>

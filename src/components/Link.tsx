@@ -1,21 +1,27 @@
 import React from "react";
 import { Link as GatsbyLink } from "gatsby";
-import { Typography, useTheme, Link as MuiLink, LinkProps as MuiLinkProps } from "@mui/material";
+import { Link as MuiLink, LinkProps as MuiLinkProps } from "@mui/material";
 
 interface LinkProps extends Pick<MuiLinkProps, "sx"> {
-	isInternal: boolean;
-	text: string;
-	link: string;
+	isInternal: boolean | null;
+	link: string | null;
+	altText?: string;
 	[key: string]: any;
 }
 
-export const Link = ({ isInternal, link, text, ...rest }: LinkProps) => {
-	const theme = useTheme();
+export const Link = ({ isInternal, link, ...rest }: LinkProps & Required<React.PropsWithChildren>) => {
 	if (isInternal) {
-		// return <GatsbyLink to={link} {...rest}>{text}</GatsbyLink>
-		return <MuiLink {...rest} component={GatsbyLink} to={link} >{text}</MuiLink>
+		return <MuiLink 
+			{...rest}
+			component={GatsbyLink}
+			to={link!}
+			title={rest.altText}
+			aria-label={rest.altText}
+		>
+				{rest.children}
+			</MuiLink>
 	}
-	return (<MuiLink {...rest} href={link} target="__blank" rel="noopener">
-		{text}
+	return (<MuiLink {...rest} href={link!} target="__blank" rel="noopener" title={rest.altText} aria-label={rest.altText}>
+		{rest.children}
 	</MuiLink>)
 }

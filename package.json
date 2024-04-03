@@ -22,7 +22,7 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.16",
     "date-fns": "^2.30.0",
-    "gatsby": "^5.8.1",
+    "gatsby": "^5.9.1",
     "gatsby-plugin-google-analytics": "^5.8.0",
     "gatsby-plugin-image": "^3.8.0",
     "gatsby-plugin-manifest": "^5.8.0",

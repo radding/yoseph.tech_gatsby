@@ -1,4 +1,4 @@
-import { AppBar, Container, Toolbar, Typography, Box, IconButton, Menu, MenuItem, Button, Tooltip, Avatar, Drawer, ListItem, List } from "@mui/material";
+import { AppBar, Container, Toolbar, Typography, Box, IconButton, Menu, MenuItem, Button, Tooltip, Avatar, Drawer, ListItem, List, Grid } from "@mui/material";
 import React from "react";
 import { FullLogo } from "./FullLogo";
 import { Link as GatsbyLink, graphql, useStaticQuery } from "gatsby";
@@ -9,9 +9,13 @@ import { CloseSharp } from "@mui/icons-material";
 
 const drawerSize = "35vw";
 
-export const Navigation = () => {
-	const details = useStaticQuery(graphql`query MyQuery {
-		wpHeader(databaseId: {eq: 34}) {
+export interface NavigationProps {
+	currentPath?: string;
+}
+
+export const Navigation = (props: NavigationProps) => {
+	const details = useStaticQuery<Queries.NavigationQuery>(graphql`query Navigation {
+		centerNav: wpHeader(databaseId: {eq: 34}) {
 			header {
 				links {
 					isInternal
@@ -22,12 +26,7 @@ export const Navigation = () => {
 		}
 	}`);
 
-	// const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElNav, setAnchorElNav] = React.useState<boolean>(false);
-
-	// const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-	// 	setAnchorElNav(event.currentTarget);
-	// };
 
 	const toggleOpenNav = () => setAnchorElNav(!anchorElNav);
 
@@ -38,19 +37,23 @@ export const Navigation = () => {
 	return (
 		<>
 			<AppBar sx={{
-				zIndex: (theme) => theme.zIndex.drawer + 1, position: {
+				zIndex: (theme) => theme.zIndex.drawer + 1, 
+				position: {
 					md: "static",
 					xs: "fixed",
-				}
+				},
 			}}>
-				<Container maxWidth="xl">
+				<Container maxWidth="xl" sx={theme => ({
+					[theme.breakpoints.up("md")]: {
+						paddingY: theme.spacing(4)
+					}
+				})}>
 					<Toolbar disableGutters>
 						<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
 							<IconButton
 								size="large"
-								aria-label="account of current user"
+								aria-label="Toggle Mobile nav Menu"
 								aria-controls="menu-appbar"
-								aria-haspopup="true"
 								onClick={toggleOpenNav}
 								color="inherit"
 							>
@@ -60,23 +63,44 @@ export const Navigation = () => {
 								</ReactCardFlip>
 							</IconButton>
 						</Box>
-						<GatsbyLink to="/" aria-label="Home Page Link">
-							<FullLogo />
-						</GatsbyLink>
-						<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-							{details.wpHeader.header.links.map((link: { isInternal: boolean, text: string, link: string }) => (
-								<Box
-									sx={theme => ({
-										marginLeft: theme.spacing(5),
-									})}
-									key={link.link}
-								>
-									<Link {...link} sx={theme => ({
-										color: theme.palette.getContrastText(theme.palette.primary.main),
-									})} />
+						<Grid container justifyContent={"space-between"} alignItems={"center"}>
+							<Grid item>
+								<GatsbyLink to="/" aria-label="Home Page Link">
+									<FullLogo />
+								</GatsbyLink>
+							</Grid>
+							<Grid item>
+								<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+									{details.centerNav!.header!.links!.map((link) => (
+										<Box
+											sx={theme => ({
+												marginLeft: theme.spacing(5),
+											})}
+											key={link!.link}
+										>
+											<Link {...link!} sx={theme => {
+												console.log(`${props.currentPath} === ${link?.link}`);
+												return {
+												color: theme.palette.getContrastText(theme.palette.primary.main),
+												"> hr": {
+													border: props.currentPath === link?.link ? "1px solid" : "hidden",
+													height: "2px"
+												},
+												":hover": {
+													textDecoration: "none",
+													"> hr": {
+														border: "1px solid"
+													}
+												}
+											}}}>
+												{link!.text}
+												<hr />
+											</Link>
+										</Box>
+									))}
 								</Box>
-							))}
-						</Box>
+							</Grid>
+						</Grid>
 					</Toolbar>
 				</Container>
 			</AppBar>
@@ -84,6 +108,7 @@ export const Navigation = () => {
 				anchor={"left"}
 				open={Boolean(anchorElNav)}
 				onClose={handleCloseNavMenu}
+				id="menu-appbar"
 				sx={{
 					display: { md: 'none' },
 					width: drawerSize,
@@ -97,12 +122,11 @@ export const Navigation = () => {
 				}}
 			>
 				<List>
-					{details.wpHeader.header.links.map((link: { isInternal: boolean, text: string, link: string }) => (
+					{details.centerNav!.header!.links!.map((link) => (
 						<ListItem
-							key={link.link}
+							key={link!.link}
 						>
-							<Link {...link} sx={theme => ({
-							})} />
+							<Link {...link!}>{link!.text}</Link>
 						</ListItem>
 					))}
 				</List>
